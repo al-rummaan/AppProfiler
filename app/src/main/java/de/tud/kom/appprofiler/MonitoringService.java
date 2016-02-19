@@ -102,28 +102,31 @@ public class MonitoringService extends IntentService {
         String command = intent.getStringExtra("Action");
         String monitoringTime = intent.getStringExtra("MonitorTime");
         String applicationID = intent.getStringExtra("AppID");
-        String resource = intent.getStringExtra("resource");
+        String resource = intent.getStringExtra("Resource");
 
+
+        Log.i("Monitoring Service", "Resouce : " + resource);
+        long time = 0;
 
         Log.i("Service", "data from intent " + command);
         showToast("Monitoring started");
 
-        switch (command) {
-            case "start":
+        switch (resource) {
+            case "CPU":
                 //network = new Network(getApplicationContext(),this.getProcessUID("com.example.xmppclient"));
                 //network.startReading();
 
-                //cpu = new CPU(5000,getProcessID("com.example.xmppclient"),getApplicationContext(),this.getSysUptime());
+                cpu = new CPU(5000, getProcessID(applicationID), getApplicationContext(), this.getSysUptime());
 
-                //cpu.startReading();
+                cpu.startReading();
                 // Log.i("CPU", "system up time:" + this.getSysUptime());
-                //mem = new Memory(getApplicationContext(),500);
-                energy = new Energy(50, getApplicationContext());
-                energy.ReadEnergy();
+
+                //energy = new Energy(50, getApplicationContext());
+                //energy.ReadEnergy();
                 //energy.readBatteryStatFile();
                 //mem.startMonitoring();
-                long time = SystemClock.elapsedRealtime();
-                while (SystemClock.elapsedRealtime() != time + 120000) ;
+                time = SystemClock.elapsedRealtime();
+                while (SystemClock.elapsedRealtime() != time + Integer.parseInt(monitoringTime)) ;
                 //SystemClock.sleep(120000);
                 //try {
                 //   Thread.sleep(120000);//montior for 3 mins
@@ -138,20 +141,49 @@ public class MonitoringService extends IntentService {
                 //showToast("Monitoring finished");
                 //mem.stopMonitoring();
                 //mem.printValue();
-                energy.StopReadingEnergy();
-                energy.printValue();
-                //cpu.stopReading();
-                //cpu.printValue();
-                showToast("monitoring finished");
+                //energy.StopReadingEnergy();
+                //energy.printValue();
+                cpu.stopReading();
+                cpu.printValue();
+
 
                 //energy.printValue();
                 //
 
                 break;
-            case "stop":
+            case "Memory":
+
+                mem = new Memory(getApplicationContext(), 500);
+                mem.startMonitoring();
+                time = SystemClock.elapsedRealtime();
+                while (SystemClock.elapsedRealtime() != time + Integer.parseInt(monitoringTime)) ;
+
+                mem.stopMonitoring();
+                mem.printValue();
 
                 break;
+            case "Network":
+                network = new Network(getApplicationContext(), this.getProcessUID(applicationID));
+                network.startReading();
+                time = SystemClock.elapsedRealtime();
+                while (SystemClock.elapsedRealtime() != time + Integer.parseInt(monitoringTime)) ;
+
+                network.stopReading();
+                network.printValue();
+                break;
+            case "Energy":
+                energy = new Energy(50, getApplicationContext());
+                energy.ReadEnergy();
+
+                time = SystemClock.elapsedRealtime();
+                while (SystemClock.elapsedRealtime() != time + Integer.parseInt(monitoringTime)) ;
+
+                energy.StopReadingEnergy();
+                energy.printValue();
+                break;
         }
+
+        showToast("monitoring finished");
 
     }
 }

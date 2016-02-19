@@ -54,7 +54,7 @@
                 android:text="Resource" />
 
             <EditText
-                android:id="@+id/resouce"
+                android:id="@+id/resource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="4" />
@@ -102,10 +102,11 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/strtMonitorBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="4"
+                android:clickable="true"
                 android:text="Start Monitoring" />
         </TableRow>
     </TableLayout>
