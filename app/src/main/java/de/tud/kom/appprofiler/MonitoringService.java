@@ -100,6 +100,9 @@ public class MonitoringService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         // Gets data from the incoming Intent
         String command = intent.getStringExtra("Action");
+        String monitoringTime = intent.getStringExtra("MonitorTime");
+        String applicationID = intent.getStringExtra("AppID");
+        String resource = intent.getStringExtra("resource");
 
 
         Log.i("Service", "data from intent " + command);
