@@ -24,7 +24,10 @@ D-64283 Darmstadt, Germany
 The goal of this part is to provide Performance Monitoring Service for other applications. The following metrics can be meaured : CPU, Memory, Network and Power
 
 AppProfiler is two parts : Application and library. The application basically implements an Adorid service  and makes it available to other apps.
-Library implements all rewuired  functions for measuring performance.
+
+An Example application will be added later
+
+Library implements all required  functions for measuring performance.
 
 
 
